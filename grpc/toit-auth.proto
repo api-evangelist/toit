@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package toit.api;
+
+import "google/protobuf/duration.proto";
+
+option go_package = "github.com/toitware/api/golang/toit/api";
+option java_package = "io.toit.proto.toit.api";
+option java_outer_classname = "AuthProto";
+option csharp_namespace = "Toit.Proto.API";
+
+service Auth {
+  rpc Login(LoginRequest) returns (AuthResponse) {}
+  rpc Refresh(RefreshRequest) returns (AuthResponse) {}
+  rpc ChangeOrganization(ChangeOrganizationRequest) returns (AuthResponse) {}
+  rpc Logout(LogoutRequest) returns (LogoutResponse) {}
+  rpc CreateOrganization(CreateOrganizationRequest) returns (CreateOrganizationResponse) {}
+}
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+  bool remember = 3;
+  bytes organization_id = 4; // optional
+}
+
+message RefreshRequest {
+  bytes refresh_token = 1;
+}
+
+message AuthResponse {
+  bytes access_token = 1;
+  string token_type = 2;
+  google.protobuf.Duration expires_in = 3;
+  bytes refresh_token = 4;
+}
+
+message LogoutRequest {}
+
+message LogoutResponse {}
+
+message ChangeOrganizationRequest {
+  bytes organization_id = 1;
+  bytes refresh_token = 2; // optional
+}
+
+message CreateOrganizationRequest {
+  message Organization {
+    string name = 1;
+    string email = 2;
+  }
+  message User {
+    string email = 1;
+    string name = 2;
+    bool newsletter = 3;
+  }
+  Organization organization = 1;
+  User user = 2;
+}
+
+message CreateOrganizationResponse {
+  bytes organization_id = 1;
+}

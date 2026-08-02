@@ -1,0 +1,134 @@
+syntax = "proto3";
+
+package toit.api;
+
+import "toit/model/organization.proto";
+import "toit/api/organization.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/toitware/api/golang/toit/api";
+option java_package = "io.toit.proto.toit.api";
+option java_outer_classname = "UserProto";
+option csharp_namespace = "Toit.Proto.API";
+
+service User {
+    rpc SetPassword(SetPasswordRequest) returns (SetPasswordResponse) {}
+    rpc InitiateResetPassword(InitiateResetPasswordRequest) returns (InitiateResetPasswordResponse) {}
+    rpc ChangePasswordWithRPToken(ChangePasswordWithRPTokenRequest) returns (ChangePasswordWithRPTokenResponse) {}
+
+    rpc GetCurrentUser(GetCurrentUserRequest) returns (GetCurrentUserResponse) {}
+    rpc ListOrganizations(ListOrganizationsRequest) returns (ListOrganizationsResponse) {}
+    rpc GetOrganization(GetOrganizationRequest) returns (GetOrganizationResponse) {}
+    rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
+        option deprecated = true;
+    }
+    rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
+        option deprecated = true;
+    }
+
+    rpc CreatePaymentSubscription(CreatePaymentSubscriptionRequest) returns (CreatePaymentSubscriptionResponse) {}
+    rpc ListPaymentInvoices(ListPaymentInvoicesRequest) returns (stream ListPaymentInvoicesResponse) {}
+    rpc CancelPaymentSubscription(CancelPaymentSubscriptionRequest) returns (CancelPaymentSubscriptionResponse) {}
+
+    rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {}
+}
+
+message SetPasswordRequest {
+    string old_password = 1;
+    string new_password = 2;
+}
+
+message SetPasswordResponse {}
+
+message InitiateResetPasswordRequest {
+    string email = 1;
+}
+
+message InitiateResetPasswordResponse {
+}
+
+message ChangePasswordWithRPTokenRequest {
+    string token = 1;
+    string new_password = 2;
+}
+
+message ChangePasswordWithRPTokenResponse {}
+
+message GetCurrentUserRequest {}
+
+message GetCurrentUserResponse {
+    model.User user = 1;
+    model.Organization organization = 2;
+}
+
+message ListOrganizationsRequest {
+    bytes user_id = 1;
+    bytes offset = 2;
+    int64 limit = 3;
+    string order_by = 4;
+    bool order_desc = 5;
+}
+
+message ListOrganizationsResponse {
+    repeated model.Organization organizations = 1;
+    bytes offset = 2;
+}
+
+message GetOrganizationRequest { bytes id = 1; }
+
+message GetOrganizationResponse {
+  model.Organization organization = 1;
+}
+
+message CreatePaymentSubscriptionRequest {
+    string billing_email = 1; // Not used
+    string card_holder_name = 2;
+    int32 card_cvc = 3;
+    int32 card_expiry_month = 4;
+    int32 card_expiry_year = 5;
+    uint64 card_number = 6;
+}
+
+message CreatePaymentSubscriptionResponse {
+}
+
+message ListPaymentInvoicesRequest {
+    int64 limit = 1;
+    bytes offset = 2; // If set with an invoice ID, the returned list will start after that invoice ID.
+}
+
+message ListPaymentInvoicesResponse {
+    Invoice invoices = 1;
+}
+
+message Invoice {
+    string invoice_id = 1;
+    string invoice_number = 2;
+    google.protobuf.Timestamp created_at = 3;
+    string pdf_url = 4;
+    string status = 5;
+    google.protobuf.Timestamp due_date = 6;
+    string receipt_pdf_url = 7;
+    int64 amount_paid = 8;
+}
+
+message CancelPaymentSubscriptionRequest {}
+
+message CancelPaymentSubscriptionResponse {}
+
+message UserChange {
+  oneof change {
+    bool set_settings_welcome_closed = 1;
+    bool set_settings_newsletter = 2;
+    string role = 3;
+    string name = 4;
+    google.protobuf.Empty questionnaire_answered_at = 5;
+  }
+}
+
+message UpdateUserRequest {
+  repeated UserChange changes = 1;
+}
+
+message UpdateUserResponse {}

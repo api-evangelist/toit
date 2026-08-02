@@ -1,0 +1,25 @@
+generated: '2026-07-21'
+method: derived
+source: grpc/ proto definitions + https://docs.toit.io/
+standards:
+  - id: grpc
+    conforms: true
+    evidence: proto3 service definitions with unary and server-streaming RPCs (toitware/api)
+  - id: protobuf-proto3
+    conforms: true
+    evidence: all service/message definitions use syntax = "proto3"
+  - id: oauth2
+    conforms: false
+    evidence: cloud API used username/password bearer tokens + org API keys, not OAuth2 flows
+  - id: mqtt
+    conforms: true
+    evidence: docs.toit.io documents MQTT device communication tutorials
+  - id: coap
+    conforms: true
+    evidence: toitware/go-coap CoAP implementation; CoAP supported for device messaging
+  - id: pubsub-messaging
+    conforms: true
+    evidence: Publish/Subscribe gRPC services with topic/subscription/envelope model
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: gRPC status codes used, not HTTP application/problem+json

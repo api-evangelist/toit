@@ -1,0 +1,35 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.toit.io/ + https://github.com/toitlang/jaguar
+clis:
+  - name: jag
+    display_name: Jaguar
+    repo: https://github.com/toitlang/jaguar
+    language: go
+    install:
+      - brew install toitlang/toit/jaguar
+      - "download release binary from https://github.com/toitlang/jaguar/releases"
+    description: >-
+      Live-reload developer tool for Toit on ESP32. Flashes Jaguar onto a device, then
+      pushes and hot-reloads Toit programs over WiFi in a couple of seconds.
+    command_groups:
+      - name: setup
+        commands: [setup, flash, port, monitor]
+      - name: develop
+        commands: [run, watch, container, pkg]
+      - name: fleet
+        commands: [scan, ping, decode]
+  - name: toit
+    display_name: Toit SDK CLI
+    repo: https://github.com/toitlang/toit
+    language: toit
+    install:
+      - brew install toitlang/toit/toit
+    description: >-
+      The Toit SDK command line — compiles Toit programs, runs the analyzer/LSP, builds
+      firmware envelopes and manages packages via the bundled tpkg package manager.
+    command_groups:
+      - name: build
+        commands: [compile, run, analyze]
+      - name: packages
+        commands: [pkg install, pkg registry, pkg init]

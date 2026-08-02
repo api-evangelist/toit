@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package toit.api;
+
+import "toit/model/program.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/toitware/api/golang/toit/api";
+option java_package = "io.toit.proto.toit.api";
+option java_outer_classname = "SDKProto";
+option csharp_namespace = "Toit.Proto.API";
+
+service SDKService {
+  rpc RegisterSDK(RegisterSDKRequest) returns (RegisterSDKResponse) {}
+  rpc DeregisterSDK(DeregisterSDKRequest) returns (DeregisterSDKResponse) {}
+  rpc LookupSDK(LookupSDKRequest) returns (LookupSDKResponse) {}
+
+  rpc ValidateModel(ValidateModelRequest) returns (ValidateModelResponse) {}
+
+  rpc SetDefaultSDK(SetDefaultSDKRequest) returns (SetDefaultSDKResponse) {}
+  rpc DefaultSDK(DefaultSDKRequest) returns (DefaultSDKResponse) {}
+  rpc ListSDKs(ListSDKsRequest) returns (ListSDKsResponse) {}
+
+  // Only available on local consoles for debug purposes.
+  rpc GetFirmwareElf(GetFirmwareElfRequest) returns (GetFirmwareElfResponse) {}
+}
+
+message RegisterSDKRequest {
+  bytes sdk = 1;
+  bool keep_default = 2;
+}
+
+message RegisterSDKResponse { string name = 1; }
+
+message DeregisterSDKRequest {
+  string name = 1;
+  bool check_exists = 2;
+}
+
+message DeregisterSDKResponse {}
+
+message LookupSDKRequest { string name = 1; }
+
+message LookupSDKResponse {
+  string name = 1 [deprecated=true];
+  string version = 2 [deprecated=true];
+  google.protobuf.Timestamp created_at = 3 [deprecated=true];
+  string created_by = 4 [deprecated=true];
+  map<string, string> settings = 5 [deprecated=true];
+  repeated string models = 6 [deprecated=true];
+  toit.model.SDK sdk = 7;
+}
+message DefaultSDKRequest {}
+
+message DefaultSDKResponse { string name = 1; }
+
+message ListSDKsRequest {}
+
+message ListSDKsResponse {
+  repeated toit.model.SDK sdks = 1;
+}
+
+message ValidateModelRequest {
+  string name = 1;
+  string model = 2;
+}
+
+message ValidateModelResponse {}
+
+message SetDefaultSDKRequest { string name = 1; }
+
+message SetDefaultSDKResponse {}
+
+message GetFirmwareElfRequest {
+  string name = 1;
+  string model = 2;
+}
+
+message GetFirmwareElfResponse {
+  bytes checksum = 1;
+  bytes file = 2;
+}

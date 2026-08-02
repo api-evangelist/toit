@@ -1,0 +1,121 @@
+syntax = "proto3";
+
+package toit.api;
+
+import "toit/model/organization.proto";
+import "toit/api/hardware.proto";
+
+option go_package = "github.com/toitware/api/golang/toit/api";
+option java_package = "io.toit.proto.toit.api";
+option java_outer_classname = "OrgProto";
+option csharp_namespace = "Toit.Proto.API";
+
+service OrganizationService {
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {}
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {}
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {}
+
+  rpc CreateAPIKey(CreateAPIKeyRequest) returns (CreateAPIKeyResponse) {}
+  rpc ListAPIKeys(ListAPIKeysRequest) returns (stream ListAPIKeysResponse) {}
+  rpc DeleteAPIKey(DeleteAPIKeyRequest) returns (DeleteAPIKeyResponse) {}
+  rpc GetAPIKeySecret(GetAPIKeySecretRequest) returns (GetAPIKeySecretResponse) {}
+
+  rpc UpdateOrganization(UpdateOrganizationRequest) returns (UpdateOrganizationResponse) {}
+  rpc CreateNewOrganization(CreateNewOrganizationRequest) returns (CreateNewOrganizationResponse) {}
+
+  rpc ClaimHardwareIdentity(ClaimHardwareIdentityRequest) returns (ClaimHardwareIdentityResponse) {}
+  rpc SetHardwareIdentityInfo(SetHardwareIdentityInfoRequest) returns (SetHardwareIdentityInfoResponse) {}
+}
+
+message ListUsersRequest {
+  bytes offset = 1;
+  int64 limit = 2;
+  string order_by = 3;
+  bool order_desc = 4;
+}
+
+message ListUsersResponse {
+  repeated model.User users = 1;
+  bytes offset = 2;
+}
+
+message CreateUserRequest { string email = 1; }
+
+message CreateUserResponse { model.User user = 1; }
+
+message DeleteUserRequest { string email = 1; }
+
+message DeleteUserResponse {}
+
+message GetUserRequest {
+  bytes id = 1;
+  string email = 2;
+}
+
+message GetUserResponse { model.User user = 1; }
+
+message CreateAPIKeyRequest {
+  string name = 1;
+}
+
+message CreateAPIKeyResponse {
+  model.APIKey api_key = 1;
+}
+
+message ListAPIKeysRequest {
+  bytes offset = 1;
+  int64 limit = 2;
+  string order_by = 3;
+  bool order_desc = 4;
+}
+
+message ListAPIKeysResponse {
+  model.APIKey api_key = 1;
+  bytes offset = 2;
+}
+
+message DeleteAPIKeyRequest {
+  bytes id = 1;
+}
+
+message DeleteAPIKeyResponse {}
+
+message GetAPIKeySecretRequest {
+  bytes id = 1;
+}
+
+message GetAPIKeySecretResponse {
+  string secret = 1;
+}
+
+message OrganizationChange {
+  oneof change {
+    string city = 1;
+    string country = 2;
+    string phone_number = 3;
+    string cvr_number = 4; // Not used
+    string name = 5;
+    string email = 6;
+    string vat_number = 7;
+    string vat_country_code = 8;
+    string address_line = 9;
+    string postal_code = 10;
+    model.Customer.Type customer = 11;
+  }
+}
+
+message UpdateOrganizationRequest {
+  repeated OrganizationChange changes = 1;
+}
+
+message UpdateOrganizationResponse {}
+
+message CreateNewOrganizationRequest {
+  string name = 1;
+  string email = 2;
+}
+
+message CreateNewOrganizationResponse {
+  bytes organization_id = 1;
+}

@@ -1,0 +1,29 @@
+# Toit
+
+> Toit builds an open-source, high-level programming language and runtime for microcontrollers (ESP32), plus fleet-management tooling for deploying and hot-reloading software across large fleets of connected devices. The core language, virtual machine, package registry and the Jaguar (`jag`) live-reload developer CLI are open source and free; Toit offers optional paid support and a self-hostable fleet broker.
+
+## Products
+- Toit language & SDK: high-level, memory-safe language for ESP32 firmware — https://toitlang.org/
+- Jaguar (`jag`): live-reload developer tool that flashes and hot-reloads Toit over WiFi — https://github.com/toitlang/jaguar
+- Fleet management: manage and update fleets of connected devices — https://toit.io/
+- Package registry: community Toit packages — https://pkg.toit.io/
+
+## Docs
+- Documentation: https://docs.toit.io/
+- Get started: https://docs.toit.io/getstarted
+- Help center: https://help.toit.io/
+- Blog: https://blog.toit.io/
+- Pricing: https://toit.io/pricing
+
+## Source & APIs
+- GitHub (language): https://github.com/toitlang
+- GitHub (platform / drivers): https://github.com/toitware
+- Legacy cloud gRPC API definitions (archived 2023): https://github.com/toitware/api
+
+## Specs (in this repo)
+- gRPC / Protobuf service index: grpc/toit-api-index.yml
+- Authentication profile: authentication/toit-authentication.yml
+- Conformance: conformance/toit-conformance.yml
+- Data model: data-model/toit-data-model.yml
+- CLI surface: cli/toit-cli.yml
+- Packages / SDKs: packages/toit-packages.yml

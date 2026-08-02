@@ -1,0 +1,55 @@
+generated: '2026-07-21'
+method: searched
+source: https://github.com/toitlang + https://github.com/toitware
+notes: >-
+  First-party developer tooling for the Toit platform. Toit ships an open-source
+  high-level language / SDK for microcontrollers (ESP32), the Jaguar (`jag`) live-reload
+  CLI, and the `tpkg` package manager. Client libraries for the legacy Toit cloud
+  gRPC API are generated from the archived toitware/api proto definitions (see grpc/).
+  The @toit npm packages in toitware/npm-packages are website tooling (code-block,
+  cookie-consent), not API client SDKs, so they are not listed as SDKs.
+packages:
+  - language: toit
+    registry: github
+    name: toit
+    url: https://github.com/toitlang/toit
+    install: brew install toitlang/toit/toit
+    official: true
+    kind: sdk
+    license: LGPL-2.1
+    description: >-
+      The open-source Toit language, compiler, virtual machine and standard library
+      for programming ESP32 microcontrollers. This is the core SDK for building device
+      firmware.
+  - language: go
+    registry: github
+    name: jaguar
+    url: https://github.com/toitlang/jaguar
+    install: brew install toitlang/toit/jaguar
+    official: true
+    kind: cli
+    description: >-
+      Jaguar (`jag`) — live-reload developer CLI that flashes and hot-reloads Toit
+      programs onto ESP32 devices over WiFi.
+  - language: go
+    registry: github
+    name: tpkg
+    url: https://github.com/toitlang/tpkg
+    install: bundled with the Toit SDK
+    official: true
+    kind: package-manager
+    description: The Toit package manager, used to install community Toit packages from pkg.toit.io.
+  - language: multi
+    registry: github
+    name: toitware/api (generated clients)
+    url: https://github.com/toitware/api
+    official: true
+    kind: grpc-client
+    archived: true
+    description: >-
+      Protobuf/gRPC API definitions for the legacy Toit cloud platform, with generated
+      clients for Go, Dart, Node, Java, Python and C#. Repository archived 2023-10-02.
+package_registry:
+  name: Toit package registry
+  url: https://pkg.toit.io/
+  description: First-party registry of community Toit language packages for ESP32.

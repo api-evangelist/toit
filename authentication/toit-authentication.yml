@@ -1,0 +1,27 @@
+generated: '2026-07-21'
+method: derived
+source: grpc/toit-auth.proto + grpc/toit-organization.proto
+notes: >-
+  Derived from the legacy Toit cloud gRPC API definitions (toitware/api). The open-source
+  Toit SDK and Jaguar (`jag`) developer tooling authenticate to devices locally over WiFi
+  and require no cloud credentials. The cloud platform used two mechanisms below.
+summary:
+  types: [bearer, apiKey]
+  api_key_in: [metadata]
+  oauth2_flows: []
+schemes:
+  - name: bearerToken
+    type: http
+    scheme: bearer
+    source: grpc/toit-auth.proto
+    description: >-
+      Auth.Login exchanges username/password for an access_token (token_type "bearer")
+      plus a refresh_token; Auth.Refresh renews it. Presented on the gRPC authorization
+      metadata for subsequent calls.
+  - name: apiKey
+    type: apiKey
+    in: metadata
+    source: grpc/toit-organization.proto
+    description: >-
+      Organization-scoped API keys created via OrganizationService.CreateAPIKey /
+      GetAPIKeySecret, used for programmatic (non-interactive) access to the platform.

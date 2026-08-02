@@ -1,0 +1,61 @@
+generated: '2026-07-21'
+method: derived
+source: grpc/ service + model proto definitions (toitware/api)
+notes: >-
+  Entity graph derived from the legacy Toit cloud gRPC service and model protos. Edges
+  are inferred from RPC groupings and message fields (e.g. organization_id, device_id).
+entities:
+  - name: Organization
+    id_field: organization_id
+    relationships:
+      - has_many: User
+        via: organization_id
+      - has_many: Device
+        via: organization_id
+      - has_many: App
+        via: organization_id
+      - has_many: APIKey
+        via: organization_id
+  - name: User
+    id_field: user_id
+    relationships:
+      - belongs_to: Organization
+        via: organization_id
+  - name: APIKey
+    relationships:
+      - belongs_to: Organization
+        via: organization_id
+  - name: Device
+    id_field: device_id
+    relationships:
+      - belongs_to: Organization
+        via: organization_id
+      - has_many: Job
+        via: device_id
+  - name: Job
+    relationships:
+      - belongs_to: Device
+        via: device_id
+      - references: App
+        via: app_id
+  - name: App
+    id_field: app_id
+    relationships:
+      - references: Program
+        via: program_id
+  - name: Program
+    id_field: program_id
+  - name: Topic
+    relationships:
+      - has_many: Subscription
+        via: topic
+      - has_many: Message
+        via: topic
+  - name: Subscription
+    relationships:
+      - belongs_to: Topic
+        via: topic
+  - name: Message
+    relationships:
+      - belongs_to: Topic
+        via: topic

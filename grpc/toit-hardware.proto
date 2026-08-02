@@ -1,0 +1,120 @@
+syntax = "proto3";
+
+package toit.api;
+
+import "toit/model/device.proto";
+import "toit/model/data.proto";
+import "toit/model/pubsub/message.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/toitware/api/golang/toit/api";
+option java_package = "io.toit.proto.toit.api";
+option java_outer_classname = "HardwareProto";
+option csharp_namespace = "Toit.Proto.API";
+
+service HardwareService {
+  rpc Claim(ClaimRequest) returns (ClaimResponse) {}
+  rpc Replace(ReplaceRequest) returns (ReplaceResponse) {}
+  rpc GetActiveDeviceID(GetActiveDeviceIDRequest) returns (GetActiveDeviceIDResponse) {}
+
+  // Debug endpoints only available on local console
+  rpc HardwareEvents(HardwareEventsRequest) returns (stream HardwareEventsResponse) {}
+}
+
+message ClaimRequest {
+  bytes hardware_id = 1;
+  string init_device_name = 2;
+  // Optional to set. Default is the current org for the user.
+  bytes organization_id = 3;
+  bool skip_hardware_online_check = 4;
+}
+
+message ClaimResponse {
+  toit.model.HardwareInfo hardware_info = 1;
+  bytes device_id = 2;
+  string device_name = 3;
+  bytes organization_id = 4;
+}
+
+message ReplaceRequest {
+  bytes new_hardware_id = 1;
+  bytes current_hardware_id = 2;
+  // The ID of the device to replace.
+  bytes device_id = 3;
+  // Optional to set. Default is the current org for the user.
+  bytes organization_id = 4;
+}
+
+message ReplaceResponse {
+  toit.model.HardwareInfo hardware_info = 1;
+  bytes organization_id = 2;
+}
+
+message GetActiveDeviceIDRequest { bytes hardware_id = 1; }
+
+message GetActiveDeviceIDResponse { bytes device_id = 1; }
+
+message HardwareEvent {
+  enum Type {
+    UNKNOWN = 0;
+    LOGS    = 1;
+    METRICS = 2;
+    PUBSUB  = 3;
+  }
+
+  bytes hardware_id = 1;
+  bytes event_id = 2;
+  Type type = 3;
+  bytes job_id = 4;
+  google.protobuf.Timestamp received = 5;
+  google.protobuf.Timestamp created = 6;
+  bytes device_id = 7;
+  bytes organization_id = 8;
+
+  oneof data {
+    toit.model.LogData log = 9;
+    toit.model.MetricsData metrics = 10;
+    toit.model.pubsub.Message pubsub = 11;
+  }
+}
+
+message HardwareEventsRequest {
+  bytes hardware_id = 1;
+  bytes job_id = 2;
+  HardwareEvent.Type type = 3;
+
+  uint64 limit = 4;
+  bool reverse = 5;
+
+   // Where to stream from, exclusive. Empty returns all historic logs.
+  oneof offset {
+    bytes id = 6;
+    google.protobuf.Timestamp ts = 7;
+  }
+}
+
+message HardwareEventsResponse {
+  HardwareEvent event = 1;
+}
+
+
+service FlashStation {
+  rpc ClaimHardwareIdentity(ClaimHardwareIdentityRequest) returns (ClaimHardwareIdentityResponse) {}
+  rpc SetHardwareIdentityInfo(SetHardwareIdentityInfoRequest) returns (SetHardwareIdentityInfoResponse) {}
+}
+
+message ClaimHardwareIdentityRequest {
+  string flash_station_secret = 1;
+}
+
+message ClaimHardwareIdentityResponse {
+  toit.model.HardwareIdentity hardware_identity = 1;
+}
+
+message SetHardwareIdentityInfoRequest {
+  string flash_station_secret = 1;
+  bytes hardware_id = 2;
+  toit.model.HardwareIdentityInfo info = 3;
+}
+
+message SetHardwareIdentityInfoResponse {}

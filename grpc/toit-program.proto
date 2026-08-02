@@ -1,0 +1,159 @@
+syntax = "proto3";
+
+package toit.api;
+
+import "toit/model/program.proto";
+
+option go_package = "github.com/toitware/api/golang/toit/api";
+option java_package = "io.toit.proto.toit.api";
+option java_outer_classname = "ProgramProto";
+option csharp_namespace = "Toit.Proto.API";
+
+service ProgramService {
+  rpc Run(stream RunRequest) returns (stream RunResponse) {}
+  rpc RunStart(RunStartRequest) returns (stream RunResponse) {}
+
+  rpc Compile(CompileRequest) returns (CompileResponse) {}
+
+  rpc Analyze(AnalyzeRequest) returns (AnalyzeResponse) {}
+
+  rpc SyntaxAnalyze(SyntaxAnalyzeRequest) returns (SyntaxAnalyzeResponse) {}
+
+  rpc GetProgram(GetProgramRequest) returns (GetProgramResponse) {}
+
+  rpc GetCompilation(GetCompilationRequest) returns (GetCompilationResponse) {}
+
+  rpc LookupPrograms(LookupProgramsRequest) returns (LookupProgramsResponse) {}
+
+  rpc DeviceRun(DeviceRunRequest) returns (stream DeviceRunResponse) {}
+
+  rpc DecodeSystemMessage(DecodeSystemMessageRequest)
+      returns (DecodeSystemMessageResponse) {}
+}
+
+message ProgramSource {
+  message Files {
+    string entry_filename = 1;
+    map<string, bytes> files = 2;
+  }
+  message Bundle {
+    bytes bundle = 1;
+  }
+
+  oneof source {
+    Files files = 1;
+    Bundle bundle = 2;
+  }
+}
+
+message CompileRequest {
+  string program_name = 1;
+  string sdk_name = 2;
+  string entry_filename = 3 [ deprecated = true ];
+  map<string, bytes> sources = 4 [ deprecated = true ];
+  repeated string args = 5;
+  ProgramSource source = 6;
+  string firmware_model = 7;
+}
+
+message CompileResponse { toit.model.Compilation compilation = 1; }
+
+message SyntaxAnalyzeRequest {
+  string entry_file = 1;
+  string sdk_name = 2;
+  map<string, bytes> sources = 3;
+}
+
+message SyntaxAnalyzeResponse { bytes response = 1; }
+
+message AnalyzeRequest {
+  message Source {
+    string sdk_name = 1;
+    string entry_filename = 2;
+    map<string, bytes> sources = 3;
+    repeated string args = 4;
+  }
+  oneof program {
+    Source source = 1;
+    bytes compilation_id = 2;
+  }
+}
+
+message AnalyzeResponse {
+  message Features {
+    bool gps = 1;
+    repeated string pubsub_subscriptions = 2;
+  }
+
+  bytes stderr = 1;
+  Features features = 2;
+}
+
+message GetProgramRequest { bytes program_id = 1; }
+
+message GetProgramResponse { toit.model.Program program = 1; }
+
+message GetCompilationRequest { bytes compilation_id = 1; }
+
+message GetCompilationResponse { toit.model.Compilation compilation = 1; }
+
+message LookupProgramsRequest { string program_name = 1; }
+
+message LookupProgramsResponse { repeated bytes program_ids = 1; }
+
+message RunRequest {
+  oneof payload {
+    RunStart start = 1;
+    RunInput input = 2;
+  }
+}
+
+message RunStart {
+  string sdk_name = 1;
+  string entry_filename = 2 [ deprecated = true ];
+  map<string, bytes> sources = 3 [ deprecated = true ];
+  repeated string args = 4;
+  ProgramSource source = 5;
+}
+
+message RunInput { bytes input = 1; }
+
+message RunStartRequest {
+  string sdk_name = 1;
+  string entry_filename = 2 [ deprecated = true ];
+  map<string, bytes> sources = 3 [ deprecated = true ];
+  repeated string args = 4;
+  ProgramSource source = 5;
+}
+
+message RunResponse {
+  oneof response {
+    bytes out = 1;
+    bytes err = 2;
+    int64 exit = 3;
+  }
+}
+
+message DeviceRunRequest {
+  bytes device_id = 1;
+  string entry_filename = 3 [ deprecated = true ];
+  map<string, bytes> sources = 4 [ deprecated = true ];
+  repeated string args = 5;
+  bool install = 6 [ deprecated = true ];
+  ProgramSource source = 7;
+}
+
+message DeviceRunResponse {
+  oneof response {
+    bytes out = 1;
+    bytes err = 2;
+    int64 exit = 3;
+  }
+}
+
+message DecodeSystemMessageRequest {
+  bytes message = 1;
+  string model = 2 [ deprecated = true ];
+}
+
+message DecodeSystemMessageResponse { string message = 1; }

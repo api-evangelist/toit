@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package toit.api;
+
+option go_package = "github.com/toitware/api/golang/toit/api";
+option java_package = "io.toit.proto.toit.api";
+option java_outer_classname = "DoctorProto";
+option csharp_namespace = "Toit.Proto.API";
+
+service DoctorService {
+  rpc HealthCheck(HealthRequest) returns (HealthResponse) {}
+}
+
+message HealthRequest {
+}
+
+message HealthResponse {
+  bool beaver = 2;
+  bool grass = 3;
+  bool oak = 4;
+}

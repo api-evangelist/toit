@@ -1,0 +1,57 @@
+generated: '2026-07-21'
+method: searched
+source: https://github.com/toitware/api/tree/master/proto/toit/api
+spec_type: Protobuf
+protocol: gRPC
+proto3: true
+status: legacy
+status_note: >-
+  Protobuf/gRPC service definitions for the legacy Toit cloud platform (device fleet,
+  pub/sub data, program compilation, org/user management). The toitware/api repository
+  was archived 2023-10-02 when Toit pivoted to the open-source language + self-hosted
+  Artemis fleet management. Saved verbatim for the historical record; not an active
+  production endpoint.
+package: toit.api
+services:
+  - name: Auth
+    file: toit-auth.proto
+    rpcs: [Login, Refresh, ChangeOrganization, Logout, CreateOrganization]
+  - name: AppService
+    file: toit-app.proto
+    rpcs: [CreateApp, GetApp, GetAppFiles, ListApps]
+  - name: DataService
+    file: toit-data.proto
+    rpcs: [CreateSubscription, DeleteSubscription, ListSubscriptions, Fetch, Stream, Acknowledge]
+  - name: DeviceService
+    file: toit-device.proto
+    rpcs: [GetDevice, ConfigureDevice, LookupDevices, ListDevices, ListJobs, ListPubSubStatus, InstallJob, ConfigureJob, RebootDevice, ReadDeviceLogs, ReadDeviceEvents, GetDevicePartitions, WatchDeviceChanges, WatchJobChanges, WatchSessionChanges, GetCurrentTime, UnclaimDevice]
+  - name: HardwareService
+    file: toit-hardware.proto
+    rpcs: [Claim, Replace, GetActiveDeviceID, HardwareEvents]
+  - name: FlashStation
+    file: toit-hardware.proto
+    rpcs: [ClaimHardwareIdentity, SetHardwareIdentityInfo]
+  - name: OrganizationService
+    file: toit-organization.proto
+    rpcs: [GetUser, ListUsers, CreateUser, DeleteUser, CreateAPIKey, ListAPIKeys, DeleteAPIKey, GetAPIKeySecret, UpdateOrganization, CreateNewOrganization, ClaimHardwareIdentity, SetHardwareIdentityInfo]
+  - name: DoctorService
+    file: toit-doctor.proto
+    rpcs: [HealthCheck]
+  - name: Publish
+    file: toit-pubsub-publish.proto
+    rpcs: [Publish]
+  - name: Subscribe
+    file: toit-pubsub-subscribe.proto
+    rpcs: [CreateSubscription, DeleteSubscription, ListSubscriptions, Fetch, Stream, Acknowledge]
+  - name: ProgramService
+    file: toit-program.proto
+    rpcs: [Run, RunStart, Compile, Analyze, SyntaxAnalyze, GetProgram, GetCompilation, LookupPrograms, DeviceRun, DecodeSystemMessage]
+  - name: SDKService
+    file: toit-sdk.proto
+    rpcs: [RegisterSDK, DeregisterSDK, LookupSDK, ValidateModel, SetDefaultSDK, DefaultSDK, ListSDKs, GetFirmwareElf]
+  - name: User
+    file: toit-user.proto
+    rpcs: [SetPassword, InitiateResetPassword, ChangePasswordWithRPToken, GetCurrentUser, ListOrganizations, GetOrganization, ListUsers, CreateUser, CreatePaymentSubscription, ListPaymentInvoices, CancelPaymentSubscription, UpdateUser]
+  - name: SimulatorService
+    file: toit-simulator.proto
+    rpcs: [CreateSimulator, RemoveSimulator, ListSimulators, CreateHardwareIdentity]

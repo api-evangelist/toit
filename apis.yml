@@ -1,7 +1,28 @@
 aid: toit
 name: Toit
-description: 'Toit is a company surfaced as a portfolio company of creandum and added to the API Evangelist
-  network as a stub for enrichment. Sector: saas. This profile is a lead awaiting the enrichment pipeline.'
+description: >-
+  Toit builds an open-source, high-level programming language and runtime for
+  microcontrollers, targeting the ESP32 family, together with fleet-management tooling
+  for deploying, monitoring and hot-reloading software across large fleets of connected
+  IoT devices. The Toit language, virtual machine, package registry and the Jaguar
+  (`jag`) live-reload developer CLI are open source and free; Toit also offers a
+  self-hostable fleet broker and paid engineering support. The company previously
+  operated a managed cloud platform exposing a gRPC API (device, pub/sub data, program
+  compilation and organization management) before pivoting to the open-source language
+  stack; those Protobuf definitions were archived in 2023. Toit is backed by Creandum.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://github.com/toitlang.png
 url: https://raw.githubusercontent.com/api-evangelist/toit/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,10 +32,19 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
 - Saas
+- IoT
+- Embedded
+- ESP32
+- Microcontrollers
+- Programming Language
+- Fleet Management
+- Firmware
+- Developer Tools
+- gRPC
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -24,3 +54,49 @@ maintainers:
 common:
 - type: Website
   url: https://toit.io/
+- type: DeveloperPortal
+  url: https://docs.toit.io/
+- type: Documentation
+  url: https://docs.toit.io/
+- type: GettingStarted
+  url: https://docs.toit.io/getstarted
+- type: Support
+  url: https://help.toit.io/
+- type: Blog
+  url: https://blog.toit.io/
+- type: Pricing
+  url: https://toit.io/pricing
+- type: TermsOfService
+  url: https://toit.io/terms-of-service
+- type: PrivacyPolicy
+  url: https://toit.io/privacy-policy
+- type: GitHubOrganization
+  url: https://github.com/toitlang
+- type: GitHubOrganization
+  name: toitware
+  url: https://github.com/toitware
+- type: Protobuf
+  name: Toit cloud gRPC API definitions (legacy, archived)
+  url: grpc/toit-api-index.yml
+- type: Authentication
+  url: authentication/toit-authentication.yml
+- type: Conformance
+  url: conformance/toit-conformance.yml
+- type: DataModel
+  url: data-model/toit-data-model.yml
+- type: CLI
+  url: cli/toit-cli.yml
+- type: Packages
+  url: packages/toit-packages.yml
+- type: SDKs
+  name: Toit language SDK
+  url: packages/toit-packages.yml
+- type: DomainSecurity
+  url: security/toit-domain-security.yml
+- type: LLMsTxt
+  url: llms/toit-llms.txt
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 9
+  pass: local-v1
