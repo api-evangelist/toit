@@ -52,6 +52,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: MCPServer
+  url: mcp/toit-mcp.yml
 - type: Website
   url: https://toit.io/
 - type: DeveloperPortal
