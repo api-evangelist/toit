@@ -2,38 +2,43 @@ generated: '2026-07-21'
 method: derived
 status: candidate
 source: grpc/ proto definitions (toitware/api)
-notes: >-
-  No official hosted MCP server was found for Toit. This is a candidate tool list derived
-  from the legacy Toit cloud gRPC operations, offered as a starting point for an agent
-  interface to a self-hosted Artemis-style fleet broker. Not a published server.
+notes: No official hosted MCP server was found for Toit. This is a candidate tool list derived from the
+  legacy Toit cloud gRPC operations, offered as a starting point for an agent interface to a self-hosted
+  Artemis-style fleet broker. Not a published server.
 server:
   name: toit
   transport: stdio
 tools:
-  - name: list_devices
-    description: List devices in an organization.
-    source_operation: grpc/toit-device.proto#DeviceService.ListDevices
-  - name: get_device
-    description: Get a single device by id.
-    source_operation: grpc/toit-device.proto#DeviceService.GetDevice
-  - name: install_job
-    description: Install a job (app) onto a device.
-    source_operation: grpc/toit-device.proto#DeviceService.InstallJob
-  - name: reboot_device
-    description: Reboot a device.
-    source_operation: grpc/toit-device.proto#DeviceService.RebootDevice
-  - name: read_device_logs
-    description: Read logs from a device.
-    source_operation: grpc/toit-device.proto#DeviceService.ReadDeviceLogs
-  - name: list_apps
-    description: List apps in an organization.
-    source_operation: grpc/toit-app.proto#AppService.ListApps
-  - name: publish_message
-    description: Publish a message to a pub/sub topic.
-    source_operation: grpc/toit-pubsub-publish.proto#Publish.Publish
-  - name: subscribe_stream
-    description: Stream messages from a pub/sub subscription.
-    source_operation: grpc/toit-pubsub-subscribe.proto#Subscribe.Stream
-  - name: list_users
-    description: List users in an organization.
-    source_operation: grpc/toit-organization.proto#OrganizationService.ListUsers
+- name: list_devices
+  description: List devices in an organization.
+  source_operation: grpc/toit-device.proto#DeviceService.ListDevices
+- name: get_device
+  description: Get a single device by id.
+  source_operation: grpc/toit-device.proto#DeviceService.GetDevice
+- name: install_job
+  description: Install a job (app) onto a device.
+  source_operation: grpc/toit-device.proto#DeviceService.InstallJob
+- name: reboot_device
+  description: Reboot a device.
+  source_operation: grpc/toit-device.proto#DeviceService.RebootDevice
+- name: read_device_logs
+  description: Read logs from a device.
+  source_operation: grpc/toit-device.proto#DeviceService.ReadDeviceLogs
+- name: list_apps
+  description: List apps in an organization.
+  source_operation: grpc/toit-app.proto#AppService.ListApps
+- name: publish_message
+  description: Publish a message to a pub/sub topic.
+  source_operation: grpc/toit-pubsub-publish.proto#Publish.Publish
+- name: subscribe_stream
+  description: Stream messages from a pub/sub subscription.
+  source_operation: grpc/toit-pubsub-subscribe.proto#Subscribe.Stream
+- name: list_users
+  description: List users in an organization.
+  source_operation: grpc/toit-organization.proto#OrganizationService.ListUsers
+deployment:
+  mode: none
+  verified: derived
+  tools: 9
+  checked: '2026-08-12'
+  source: catalog MCP census
