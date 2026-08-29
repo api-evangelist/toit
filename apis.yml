@@ -10,6 +10,17 @@ description: >-
   operated a managed cloud platform exposing a gRPC API (device, pub/sub data, program
   compilation and organization management) before pivoting to the open-source language
   stack; those Protobuf definitions were archived in 2023. Toit is backed by Creandum.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
